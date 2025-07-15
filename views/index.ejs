@@ -293,12 +293,6 @@
                         <p class="character-detail"><strong>Fruta del Diablo:</strong> <%= p.fruta_del_diablo %></p>
                         <p class="character-detail"><strong>Recompensa:</strong> <%= p.recompensa %></p>
                         
-                        <% if(p.video_url) { %>
-                        <div class="video-container">
-                            <iframe src="<%= p.video_url %>" frameborder="0" allowfullscreen></iframe>
-                        </div>
-                        <% } %>
-                        
                         <div class="buttons">
                             <a href="/edit/<%= p.id %>" class="btn btn-edit">Editar</a>
                             <form action="/delete/<%= p.id %>" method="POST" style="display: inline;">

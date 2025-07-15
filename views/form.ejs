@@ -1,38 +1,186 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Formulario Personaje</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= personaje.id ? "Editar" : "Agregar" %> Personaje | One Piece</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #B22222; /* Rojo One Piece */
+            --secondary-color: #1E3A8A; /* Azul marino */
+            --accent-color: #FFD700; /* Oro del sombrero de paja */
+            --text-light: #ffffff;
+            --text-dark: #333333;
+            --bg-transparent: rgba(255, 255, 255, 0.95);
+        }
+        
+        body {
+            font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+            background-image: url('https://images.unsplash.com/photo-1633613286848-e6f43bbafb8d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            min-height: 100vh;
+            padding-top: 40px;
+            padding-bottom: 40px;
+        }
+
+        .form-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: var(--bg-transparent);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border: 3px solid var(--accent-color);
+        }
+
+        h1 {
+            color: var(--primary-color);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px !important;
+            padding-bottom: 15px;
+            border-bottom: 3px solid var(--accent-color);
+            position: relative;
+        }
+
+        h1::after {
+            content: "⚓";
+            position: absolute;
+            right: 0;
+            bottom: -10px;
+            font-size: 1.5rem;
+        }
+
+        .form-label {
+            font-weight: bold;
+            color: var(--secondary-color);
+            margin-bottom: 8px;
+        }
+
+        .form-control {
+            border: 2px solid var(--secondary-color);
+            border-radius: 8px;
+            padding: 12px 15px;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.25rem rgba(178, 34, 34, 0.25);
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            padding: 10px 25px;
+            font-weight: bold;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #8B0000;
+            border-color: #8B0000;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+            padding: 10px 25px;
+            font-weight: bold;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background-color: #0F2D5A;
+            border-color: #0F2D5A;
+            transform: translateY(-2px);
+        }
+
+        .input-group-text {
+            background-color: var(--accent-color);
+            color: var(--text-dark);
+            font-weight: bold;
+            border: 2px solid var(--secondary-color);
+        }
+
+        .form-text {
+            color: #666;
+            font-size: 0.85rem;
+            font-style: italic;
+        }
+
+        @media (max-width: 768px) {
+            .form-container {
+                padding: 20px;
+                margin: 20px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
 </head>
-<body class="bg-light">
-<div class="container py-4">
-    <h1 class="mb-4"><%= personaje.id ? "Editar" : "Agregar" %> personaje</h1>
+<body>
+<div class="form-container">
+    <h1 class="text-center mb-4"><%= personaje.id ? "Editar Pirata" : "Agregar Nuevo Pirata" %></h1>
+    
     <form action="<%= action %>" method="POST">
-        <div class="mb-3">
-            <label>Nombre:</label>
-            <input type="text" name="nombre" value="<%= personaje.nombre || '' %>" class="form-control" required>
+        <!-- Nombre -->
+        <div class="mb-4">
+            <label class="form-label">Nombre del Pirata:</label>
+            <input type="text" name="nombre" value="<%= personaje.nombre || '' %>" class="form-control form-control-lg" required placeholder="Ej: Monkey D. Luffy">
+            <div class="form-text">El nombre completo del personaje</div>
         </div>
-        <div class="mb-3">
-            <label>Fruta del Diablo:</label>
-            <input type="text" name="fruta_del_diablo" value="<%= personaje.fruta_del_diablo || '' %>" class="form-control">
+
+        <!-- Fruta del Diablo -->
+        <div class="mb-4">
+            <label class="form-label">Fruta del Diablo:</label>
+            <div class="input-group">
+                <span class="input-group-text">🍊</span>
+                <input type="text" name="fruta_del_diablo" value="<%= personaje.fruta_del_diablo || '' %>" class="form-control" placeholder="Ej: Gomu Gomu no Mi">
+            </div>
+            <div class="form-text">Dejar vacío si no posee fruta del diablo</div>
         </div>
-        <div class="mb-3">
-            <label>Recompensa:</label>
-            <input type="text" name="recompensa" value="<%= personaje.recompensa || '' %>" class="form-control">
+
+        <!-- Recompensa -->
+        <div class="mb-4">
+            <label class="form-label">Recompensa:</label>
+            <div class="input-group">
+                <span class="input-group-text">฿</span>
+                <input type="text" name="recompensa" value="<%= personaje.recompensa || '' %>" class="form-control" placeholder="Ej: 1,500,000,000 Berries">
+            </div>
         </div>
-        <div class="mb-3">
-            <label>Imagen URL:</label>
-            <input type="url" name="imagen_url" value="<%= personaje.imagen_url || '' %>" class="form-control">
+
+        <!-- Imagen -->
+        <div class="mb-4">
+            <label class="form-label">Imagen del Pirata:</label>
+            <input type="url" name="imagen_url" value="<%= personaje.imagen_url || '' %>" class="form-control" placeholder="https://ejemplo.com/imagen.jpg">
+            <div class="form-text">URL de una imagen del personaje</div>
         </div>
-        <div class="mb-3">
-            <label>Video URL (YouTube embebido):</label>
-            <input type="url" name="video_url" value="<%= personaje.video_url || '' %>" class="form-control">
+
+        <!-- Video -->
+        <div class="mb-4">
+            <label class="form-label">Video (YouTube):</label>
+            <input type="url" name="video_url" value="<%= personaje.video_url || '' %>" class="form-control" placeholder="https://youtube.com/embed/...">
+            <div class="form-text">URL embebida de YouTube (usar formato embed)</div>
         </div>
-        <button class="btn btn-primary">Guardar</button>
-        <a href="/" class="btn btn-secondary">Cancelar</a>
+
+        <!-- Botones -->
+        <div class="d-flex justify-content-between mt-5">
+            <a href="/" class="btn btn-secondary btn-lg">← Cancelar</a>
+            <button type="submit" class="btn btn-primary btn-lg">
+                <%= personaje.id ? "Actualizar Pirata" : "Agregar a la Tripulación" %>
+            </button>
+        </div>
     </form>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -8,8 +8,7 @@ db.serialize(() => {
         nombre TEXT,
         fruta_del_diablo TEXT,
         recompensa TEXT,
-        imagen_url TEXT,
-        video_url TEXT
+        imagen_url TEXT
     )`);
 });
 
